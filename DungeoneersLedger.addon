@@ -1,0 +1,29 @@
+# IMPORTANT: the old DungeonCompletion addon (this addon's predecessor) must be removed or disabled.
+# Two copies would hook the Dungeon Finder twice; this addon detects it and stays inactive.
+# This Add-On is not created by, affiliated with or sponsored by ZeniMax Media Inc. or its affiliates. The Elder Scrolls® and related logos are registered trademarks or trademarks of ZeniMax Media Inc. in the United States and/or other countries. All rights reserved.
+# Disclaimer: this addon was written with the help of AI (Claude by Anthropic) and reviewed by its author. It was tested in the game by its author as far as possible, but bugs are possible - please report them, and back up your SavedVariables if you rely on it.
+
+## Title: Dungeoneer's Ledger
+## Description: Shows in the Dungeon Finder which dungeons you have completed, their extra achievements and your dungeon quests, with grouping, sorting, search and one-click selection of quest dungeons.
+## Author: wasd0109
+## Version: 0.1.0
+## AddOnVersion: 1
+## APIVersion: 101051 101052
+## DependsOn: LibSets>=9040
+## OptionalDependsOn: LibAddonMenu-2.0>=43
+## SavedVariables: DungeoneersLedger_SavedVariables DungeonCompletion_SavedVariables
+
+lang/en.lua
+lang/$(language).lua
+Overrides.lua
+DungeoneersLedger.xml
+src/Core.lua
+src/LibSetsData.lua
+src/Achievements.lua
+src/Quests.lua
+src/ListLogic.lua
+src/RowUI.lua
+src/FinderPanel.lua
+src/Settings.lua
+src/Debug.lua
+src/Main.lua

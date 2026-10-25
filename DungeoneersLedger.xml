@@ -1,0 +1,10 @@
+<GuiXml>
+    <Controls>
+        <Backdrop name="DungeoneersLedgerSearchTemplate" tier="HIGH" inherits="ZO_SingleLineEditBackdrop_Keyboard" virtual="true">
+            <Dimensions x="200"/>
+            <Controls>
+                <EditBox name="$(parent)Box" inherits="ZO_DefaultEditForBackdrop"/>
+            </Controls>
+        </Backdrop>
+    </Controls>
+</GuiXml>

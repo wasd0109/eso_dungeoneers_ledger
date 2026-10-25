@@ -1,0 +1,81 @@
+Title: Dungeoneer's Ledger
+Version: 0.1.0
+Category: Group, Guild & Friends
+
+---- paste everything below into the Description box (BBCode) ----
+
+[b][size=5]Overview[/size][/b]
+Dungeoneer's Ledger adds a progress ledger to the Dungeon Finder (Group > Dungeon Finder > Specific Dungeons). See at a glance which dungeons you have completed, which extra veteran achievements you have earned and which dungeons you have a quest for, then group, sort, search and select them in one click.
+
+[b][size=5]Features[/size][/b]
+[list]
+[*]Completion icon next to every dungeon, from the dungeon's own achievement.
+[*]Extra veteran markers: hard mode, speed run, no death, trifecta - lit once earned.
+[*]Quest marker for dungeons you have a quest for (Undaunted pledges and other dungeon quests).
+[*]Tooltip lists your other characters with a quest for the same dungeon.
+[*]Group by completion or DLC / chapter; pin quest dungeons to the top.
+[*]Sort, search by name, hide completed dungeons.
+[*]Progress line, e.g. "Completed: Normal 27/41 - Veteran 18/41".
+[*]One-click "Select quest dungeons" and "Select and queue" buttons.
+[/list]
+
+[b][size=5]Settings[/size][/b]
+Settings > Add-Ons > Dungeoneer's Ledger, or [b]/dledger settings[/b] (needs LibAddonMenu-2.0). Defaults in brackets.
+[list]
+[*][b]Show completion icon[/b] (on): the check box next to each dungeon; its tooltip names the achievement.
+[*][b]Show extra achievement markers[/b] (on): markers for a veteran dungeon's extra achievements, grey until earned; the tooltip lists each tier.
+[*][b]Hard mode marker[/b], [b]Speed run marker[/b], [b]No death marker[/b], [b]Trifecta marker[/b] (all on): show or hide each tier. Needs the main markers toggle.
+[*][b]Show dungeons I have a quest for[/b] (on): marks dungeons matching an active quest of this character.
+[*][b]Show which characters have quests for a dungeon[/b] (on): adds "Also active on: ..." to that tooltip.
+[*][b]Pin dungeons with a quest to the top[/b] (off): own group "Dungeons with a quest" at the top of the NORMAL and VETERAN lists; works together with grouping.
+[*][b]Select and queue veteran dungeons instead of normal[/b] (off): the buttons pick the veteran version of each dungeon whichever difficulty the finder shows. Off: they follow your current dungeon difficulty.
+[*][b]Skip completed when selecting quest dungeons[/b] (off): the buttons leave out completed dungeons.
+[*][b]Icon size[/b] (18, 12-32): size of all icons.
+[*][b]Hide completed dungeons[/b] (off): removes completed dungeons from the list.
+[*][b]Group dungeons by[/b] (None): None = game order; Completion = "Not completed" / "Completed"; DLC / chapter. Group headers show counts.
+[*][b]Sort dungeons by[/b] (Game order): Game order, Name (A-Z), DLC or Completion, inside each list or group.
+[/list]
+
+[b][size=5]Slash commands[/size][/b]
+[list]
+[*][b]/dledger[/b] or [b]/dungeoneersledger[/b]: usage
+[*][b]/dledger settings[/b]: open the settings panel
+[*][b]/dledger debug[/b]: print how each dungeon was matched and which quests were found
+[*][b]/dledger debug on[/b] / [b]off[/b]: print the first error of each kind once
+[/list]
+
+[b][size=5]Buttons[/size][/b]
+Two buttons sit beside the game's Join Queue button.
+[list]
+[*][b]Select quest dungeons[/b]: ticks the dungeons you have a quest for, for one difficulty.
+[*][b]Select and queue[/b]: the same, then presses the game's own Join Queue.
+[/list]
+Safeguards: one click is one action; nothing is ever selected or queued automatically; the game's own checks apply (locked dungeons are skipped and listed in chat); nothing happens while you are queued, when the Group Finder is in use, or when you are grouped but not the leader; normal and veteran are never mixed; dungeons hidden by the search or hide-completed filter are never queued.
+
+[b][size=5]Notes and limitations[/size][/b]
+[list]
+[*]Achievements are account-wide.
+[*]"Also active on" only knows characters you have logged into with the addon.
+[*]Today's Undaunted pledges are not visible to addons before you accept them; the game does not expose them.
+[*]Extra markers and the exact dungeon mapping depend on LibSets data; newer dungeons may fall back to name matching.
+[*]Keyboard and mouse UI only. Remove the old DungeonCompletion addon if you had it.
+[/list]
+
+[b][size=5]Dependencies[/size][/b]
+[list]
+[*]LibSets (required)
+[*]LibAddonMenu-2.0 (optional, for the settings panel)
+[/list]
+
+[b][size=5]Disclaimer[/size][/b]
+This addon was written with the help of AI (Claude by Anthropic) and reviewed by its author. It was tested in the game by its author as far as possible, but bugs are possible - please report them, and back up your SavedVariables if you rely on it.
+
+[b][size=5]Credits[/size][/b]
+[list]
+[*]LibSets by @Baertram (CC BY-NC-ND) - only used as a dependency, never bundled or copied.
+[*]LibAddonMenu-2.0 by Seerah, sirinsidiator and contributors.
+[/list]
+[i]This Add-On is not created by, affiliated with or sponsored by ZeniMax Media Inc. or its affiliates. The Elder Scrolls and related logos are registered trademarks or trademarks of ZeniMax Media Inc. in the United States and/or other countries. All rights reserved.[/i]
+
+[b][size=5]Source[/size][/b]
+git clone <repository url>   (suggested repository name: eso_dungeoneers_ledger)
