@@ -71,9 +71,13 @@ local function SortLocations(locations)
             key = DL.GetNormalizedName(location)
         elseif mode == DL.SORT_DLC then
             key = GetRequiredActivityCollectibleId(location:GetId())
+        elseif mode == DL.SORT_DATE_NEWEST or mode == DL.SORT_DATE_OLDEST then
+            -- Undated (not earned, or no date) dungeons sort last in both directions.
+            local timestamp = DL.GetLocationCompletionTimestamp(location)
+            key = timestamp and (mode == DL.SORT_DATE_NEWEST and -timestamp or timestamp) or math.huge
         else
             local complete = DL.IsLocationComplete(location)
-            key = complete == nil and 1 or (complete and 2 or 0)
+            key = complete == nil and 2 or (complete and 1 or 0)
         end
         decorated[index] = { location = location, key = key, index = index }
     end

@@ -1,0 +1,6 @@
+test("boot: addon loads and starts with real LibSets data", function()
+    local w = Boot()
+    ok(w.DL, "DungeoneersLedger global missing")
+    ok(w.store.SLASH_COMMANDS["/dledger"], "slash command not registered")
+    ok(#w:locations(2) > 40, "expected the real dungeon list")
+end)

@@ -123,8 +123,9 @@ local function PruneDeletedCharacters(store)
 end
 
 -- Records the current character's dungeon quests from the quest journal alone (no finder data needed).
--- An empty journal is treated as "not loaded yet" and leaves the existing record untouched.
-function DL.RecordCurrentCharacter()
+-- An empty journal may just not be loaded yet, so it is only trusted (allowEmpty, passed after a quest
+-- event) to clear the character's quest list; the record entry itself always stays.
+function DL.RecordCurrentCharacter(allowEmpty)
     local store = DL.settings.characterQuests
     if type(store) ~= "table" then
         store = {}
@@ -134,8 +135,8 @@ function DL.RecordCurrentCharacter()
 
     DL.InvalidateQuests()
     local active = DL.GetActiveQuests()
-    if #active == 0 then
-        return
+    if #active == 0 and not allowEmpty then
+        return -- possibly not loaded yet; only a quest event proves the journal is really empty
     end
     local quests = {}
     for _, quest in ipairs(active) do

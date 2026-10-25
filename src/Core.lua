@@ -13,12 +13,14 @@ DL.ACTIVITY_TYPES = { LFG_ACTIVITY_DUNGEON, LFG_ACTIVITY_MASTER_DUNGEON }
 DL.GROUP_NONE, DL.GROUP_COMPLETION, DL.GROUP_DLC = "none", "completion", "dlc"
 DL.GROUP_CHOICE_VALUES = { DL.GROUP_NONE, DL.GROUP_COMPLETION, DL.GROUP_DLC }
 DL.SORT_GAME, DL.SORT_NAME, DL.SORT_DLC, DL.SORT_COMPLETION = "game", "name", "dlc", "completion"
-DL.SORT_CHOICE_VALUES = { DL.SORT_GAME, DL.SORT_NAME, DL.SORT_DLC, DL.SORT_COMPLETION }
+DL.SORT_DATE_NEWEST, DL.SORT_DATE_OLDEST = "dateNewest", "dateOldest"
+DL.SORT_CHOICE_VALUES = { DL.SORT_GAME, DL.SORT_NAME, DL.SORT_DLC, DL.SORT_COMPLETION, DL.SORT_DATE_NEWEST, DL.SORT_DATE_OLDEST }
 
 DL.DEFAULTS =
 {
     showCompletion = true,
     showTiers = true,
+    showDates = true,
     tierHardMode = true,
     tierSpeedRun = true,
     tierNoDeath = true,
@@ -206,6 +208,10 @@ local function ImportOldSettings(saved)
             if old[key] ~= nil then
                 saved[key] = old[key]
             end
+        end
+        if old.groupBy == "pledge" then -- the old addon's pledge grouping is this addon's quest pinning
+            saved.groupBy = DL.GROUP_NONE
+            saved.pinQuest = true
         end
         saved.characterQuests = ConvertOldCharacterRecords(old.characterQuests)
     end

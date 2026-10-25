@@ -14,6 +14,8 @@ local strings =
     SI_DUNGEONEERSLEDGER_SETTING_SHOW_COMPLETION_TT = "Show whether each dungeon's achievement is completed next to its name in the Dungeon Finder.",
     SI_DUNGEONEERSLEDGER_SETTING_SHOW_TIERS = "Show extra achievement markers",
     SI_DUNGEONEERSLEDGER_SETTING_SHOW_TIERS_TT = "Show small markers for the extra veteran achievements of a dungeon (hard mode, speed run, no death, trifecta), lit once earned. Uses the dungeon data from LibSets.",
+    SI_DUNGEONEERSLEDGER_SETTING_SHOW_DATES = "Show completion dates in tooltips",
+    SI_DUNGEONEERSLEDGER_SETTING_SHOW_DATES_TT = "Add the date an achievement was earned to the tooltips of the completion icon and the extra achievement markers, formatted by the game for your language.",
     SI_DUNGEONEERSLEDGER_SETTING_TIER_HARDMODE = "Hard mode marker",
     SI_DUNGEONEERSLEDGER_SETTING_TIER_SPEEDRUN = "Speed run marker",
     SI_DUNGEONEERSLEDGER_SETTING_TIER_NODEATH = "No death marker",
@@ -40,6 +42,8 @@ local strings =
     SI_DUNGEONEERSLEDGER_CHOICE_COMPLETION = "Completion",
     SI_DUNGEONEERSLEDGER_CHOICE_DLC = "DLC / chapter",
     SI_DUNGEONEERSLEDGER_CHOICE_NAME = "Name (A-Z)",
+    SI_DUNGEONEERSLEDGER_CHOICE_DATE_NEWEST = "Completion date (newest first)",
+    SI_DUNGEONEERSLEDGER_CHOICE_DATE_OLDEST = "Completion date (oldest first)",
 
     -- Group headers
     SI_DUNGEONEERSLEDGER_GROUP_INCOMPLETE = "Not completed",
@@ -53,6 +57,8 @@ local strings =
     -- Tooltips
     SI_DUNGEONEERSLEDGER_TT_COMPLETE = "Completed (achievement: %s)",
     SI_DUNGEONEERSLEDGER_TT_INCOMPLETE = "Not completed (achievement: %s)",
+    SI_DUNGEONEERSLEDGER_TT_COMPLETE_DATED = "Completed (achievement: %s) - %s",
+    SI_DUNGEONEERSLEDGER_TT_STATE_DATED = "%s %s",
     SI_DUNGEONEERSLEDGER_TT_TIER = "%s - %s",
     SI_DUNGEONEERSLEDGER_TT_PLEDGE = "Current Undaunted pledge",
     SI_DUNGEONEERSLEDGER_TT_QUEST = "Quest: %s",

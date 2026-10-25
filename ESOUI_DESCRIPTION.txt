@@ -20,9 +20,10 @@ Dungeoneer's Ledger adds a progress ledger to the Dungeon Finder (Group > Dungeo
 [/list]
 
 [b][size=5]Settings[/size][/b]
-Settings > Add-Ons > Dungeoneer's Ledger, or [b]/dledger settings[/b] (needs LibAddonMenu-2.0). Defaults in brackets.
+Settings > Add-Ons > Dungeoneer's Ledger, or [b]/dledger settings[/b]. Defaults in brackets.
 [list]
 [*][b]Show completion icon[/b] (on): the check box next to each dungeon; its tooltip names the achievement.
+[*][b]Show completion dates in tooltips[/b] (on): adds the date an achievement was earned to the completion icon and marker tooltips, formatted by the game for your language.
 [*][b]Show extra achievement markers[/b] (on): markers for a veteran dungeon's extra achievements, grey until earned; the tooltip lists each tier.
 [*][b]Hard mode marker[/b], [b]Speed run marker[/b], [b]No death marker[/b], [b]Trifecta marker[/b] (all on): show or hide each tier. Needs the main markers toggle.
 [*][b]Show dungeons I have a quest for[/b] (on): marks dungeons matching an active quest of this character.
@@ -33,7 +34,7 @@ Settings > Add-Ons > Dungeoneer's Ledger, or [b]/dledger settings[/b] (needs Lib
 [*][b]Icon size[/b] (18, 12-32): size of all icons.
 [*][b]Hide completed dungeons[/b] (off): removes completed dungeons from the list.
 [*][b]Group dungeons by[/b] (None): None = game order; Completion = "Not completed" / "Completed"; DLC / chapter. Group headers show counts.
-[*][b]Sort dungeons by[/b] (Game order): Game order, Name (A-Z), DLC or Completion, inside each list or group.
+[*][b]Sort dungeons by[/b] (Game order): Game order, Name (A-Z), DLC, Completion, Completion date (newest first) or (oldest first), inside each list or group. Undated dungeons sort last.
 [/list]
 
 [b][size=5]Slash commands[/size][/b]
@@ -64,7 +65,7 @@ Safeguards: one click is one action; nothing is ever selected or queued automati
 [b][size=5]Dependencies[/size][/b]
 [list]
 [*]LibSets (required)
-[*]LibAddonMenu-2.0 (optional, for the settings panel)
+[*]LibAddonMenu-2.0 (required, for the settings panel)
 [/list]
 
 [b][size=5]Disclaimer[/size][/b]

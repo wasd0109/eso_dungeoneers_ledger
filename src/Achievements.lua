@@ -61,14 +61,16 @@ local function BuildAchievementIndex()
             end
         end
     end
-    achievementIndex = list
+    if #list > 0 then
+        achievementIndex = list -- an empty list means the achievements are not loaded yet; try again later
+    end
     return list
 end
 
 -- Picks the top level category with the most name hits across all finder dungeons, so unrelated
 -- achievements elsewhere (lore books, zone achievements mentioning a dungeon) are not matched.
 local function DetermineDungeonTop()
-    if dungeonTop ~= nil then
+    if dungeonTop then
         return dungeonTop
     end
     local index = BuildAchievementIndex()
@@ -89,7 +91,7 @@ local function DetermineDungeonTop()
             bestTop, bestCount = top, count
         end
     end
-    dungeonTop = bestTop
+    dungeonTop = bestTop or nil -- a failed search is not cached, so it is retried once data has loaded
     return dungeonTop
 end
 
@@ -131,7 +133,16 @@ local function FindOverrideId(location, isVeteran)
         end
     end
     local override = overrideLookup[DL.GetNormalizedName(location)]
-    return override and (isVeteran and override.veteran or override.normal) or nil
+    if not override then
+        return nil
+    end
+    local id
+    if isVeteran then
+        id = override.veteran
+    else
+        id = override.normal
+    end
+    return type(id) == "number" and id > 0 and id or nil
 end
 
 -----------------
@@ -195,4 +206,32 @@ function DL.GetLocationTiers(location)
         end
     end
     return #enabled > 0 and enabled or nil
+end
+
+-----------------------
+-- Completion dates  --
+-----------------------
+
+-- The date the game shows for an earned achievement (already formatted for the player's locale by
+-- GetAchievementInfo), or nil when it is not earned or the date is empty.
+function DL.GetCompletionDate(achievementId)
+    local _, _, _, _, completed, date = GetAchievementInfo(achievementId)
+    if completed and type(date) == "string" and date ~= "" then
+        return date
+    end
+    return nil
+end
+
+-- The raw earned timestamp used for sorting, or nil when it is not earned or the timestamp is 0.
+function DL.GetCompletionTimestamp(achievementId)
+    if not IsAchievementComplete(achievementId) then
+        return nil
+    end
+    local timestamp = tonumber(GetAchievementTimestamp(achievementId))
+    return timestamp and timestamp > 0 and timestamp or nil
+end
+
+function DL.GetLocationCompletionTimestamp(location)
+    local achievementId = DL.FindAchievementId(location)
+    return achievementId and DL.GetCompletionTimestamp(achievementId) or nil
 end

@@ -9,8 +9,7 @@
 ## Version: 0.1.0
 ## AddOnVersion: 1
 ## APIVersion: 101051 101052
-## DependsOn: LibSets>=9040
-## OptionalDependsOn: LibAddonMenu-2.0>=43
+## DependsOn: LibSets>=9040 LibAddonMenu-2.0>=43
 ## SavedVariables: DungeoneersLedger_SavedVariables DungeonCompletion_SavedVariables
 
 lang/en.lua

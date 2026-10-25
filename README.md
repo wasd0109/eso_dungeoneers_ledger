@@ -19,9 +19,10 @@ Dungeoneer's Ledger adds a progress ledger to the keyboard Dungeon Finder (Group
 
 ## Settings
 
-Open them from Settings > Add-Ons > Dungeoneer's Ledger or with `/dledger settings` (needs LibAddonMenu-2.0).
+Open them from Settings > Add-Ons > Dungeoneer's Ledger or with `/dledger settings`.
 
 - **Show completion icon** (on): the check box next to each dungeon name; its tooltip names the achievement.
+- **Show completion dates in tooltips** (on): adds the date an achievement was earned to the tooltips of the completion icon and the extra achievement markers, formatted by the game for your language.
 - **Show extra achievement markers** (on): small markers for a veteran dungeon's extra achievements, using the achievement's own icon. Grey until earned. The tooltip lists each tier.
   - **Hard mode marker**, **Speed run marker**, **No death marker**, **Trifecta marker** (all on): show or hide each tier separately. Only available while the main markers toggle is on. A dungeon without a tier shows no marker for it.
 - **Show dungeons I have a quest for** (on): marks dungeons that match an active quest of the current character (the tooltip names the quest, or "Current Undaunted pledge").
@@ -32,7 +33,7 @@ Open them from Settings > Add-Ons > Dungeoneer's Ledger or with `/dledger settin
 - **Icon size** (18, range 12-32): size of all icons.
 - **Hide completed dungeons** (off): removes completed dungeons from the list.
 - **Group dungeons by** (None): None keeps the game's order; Completion makes "Not completed" and "Completed" groups; DLC / chapter groups by the DLC or chapter a dungeon belongs to. Group headers show counts.
-- **Sort dungeons by** (Game order): Game order, Name (A-Z), DLC or Completion, inside each list or group.
+- **Sort dungeons by** (Game order): Game order, Name (A-Z), DLC, Completion, Completion date (newest first) or Completion date (oldest first), inside each list or group. Dungeons without a completion date sort last.
 
 ## Slash commands
 
@@ -60,14 +61,14 @@ Safeguards: one click is one action; nothing is ever selected or queued automati
 
 ## Install
 
-1. Install LibSets (required) and, optionally, LibAddonMenu-2.0.
+1. Install LibSets and LibAddonMenu-2.0 (both required).
 2. Remove or disable the old DungeonCompletion addon if you had it. Settings and character records are imported once.
 3. Copy the `DungeoneersLedger` folder to `Documents\Elder Scrolls Online\live\AddOns\`.
 
 ## Dependencies
 
 - LibSets (required)
-- LibAddonMenu-2.0 (optional, for the settings panel)
+- LibAddonMenu-2.0 (required, for the settings panel)
 
 ## Credits
 

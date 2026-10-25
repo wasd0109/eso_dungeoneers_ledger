@@ -8,6 +8,7 @@ local DL = DungeoneersLedger
 local function NeedsFullRebuildOnAchievement()
     local settings = DL.settings
     return settings.hideCompleted or settings.groupBy == DL.GROUP_COMPLETION or settings.sortBy == DL.SORT_COMPLETION
+        or settings.sortBy == DL.SORT_DATE_NEWEST or settings.sortBy == DL.SORT_DATE_OLDEST
 end
 
 local function RefreshAfterAchievementChange()
@@ -19,8 +20,13 @@ local function RefreshAfterAchievementChange()
     end
 end
 
+-- Set by quest events: the journal is loaded, so an empty one is real. Not set by PLAYER_ACTIVATED alone.
+local journalChanged = false
+
 local function RefreshAfterQuestChange()
-    DL.RecordCurrentCharacter()
+    local allowEmpty = journalChanged
+    journalChanged = false
+    DL.RecordCurrentCharacter(allowEmpty)
     if not DL.IsFinderShowing() then
         return
     end
@@ -43,14 +49,19 @@ local function OnQuestChanged()
     DL.Debounce("quest", RefreshAfterQuestChange)
 end
 
+local function OnQuestEvent()
+    journalChanged = true
+    OnQuestChanged()
+end
+
 local function RegisterEvents()
     local events = DL.name
     EVENT_MANAGER:RegisterForEvent(events, EVENT_ACHIEVEMENT_UPDATED, OnAchievementChanged)
     EVENT_MANAGER:RegisterForEvent(events, EVENT_ACHIEVEMENTS_UPDATED, OnAchievementChanged)
-    EVENT_MANAGER:RegisterForEvent(events, EVENT_QUEST_ADDED, OnQuestChanged)
-    EVENT_MANAGER:RegisterForEvent(events, EVENT_QUEST_REMOVED, OnQuestChanged)
-    EVENT_MANAGER:RegisterForEvent(events, EVENT_QUEST_COMPLETE, OnQuestChanged)
-    EVENT_MANAGER:RegisterForEvent(events, EVENT_QUEST_ADVANCED, OnQuestChanged)
+    EVENT_MANAGER:RegisterForEvent(events, EVENT_QUEST_ADDED, OnQuestEvent)
+    EVENT_MANAGER:RegisterForEvent(events, EVENT_QUEST_REMOVED, OnQuestEvent)
+    EVENT_MANAGER:RegisterForEvent(events, EVENT_QUEST_COMPLETE, OnQuestEvent)
+    EVENT_MANAGER:RegisterForEvent(events, EVENT_QUEST_ADVANCED, OnQuestEvent)
     EVENT_MANAGER:RegisterForEvent(events, EVENT_PLAYER_ACTIVATED, OnQuestChanged)
 end
 

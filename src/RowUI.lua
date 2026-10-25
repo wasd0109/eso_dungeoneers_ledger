@@ -60,13 +60,23 @@ end
 -- Lines for the completion icon and the tier markers: the dungeon achievement, then each extra tier.
 local function BuildCompletionTooltip(achievementId, complete, tiers)
     local lines = {}
+    local showDates = DL.settings.showDates
     if achievementId then
-        lines[#lines + 1] = DL.L(complete and SI_DUNGEONEERSLEDGER_TT_COMPLETE or SI_DUNGEONEERSLEDGER_TT_INCOMPLETE, GetAchievementName(achievementId))
+        local date = complete and showDates and DL.GetCompletionDate(achievementId) or nil
+        if date then
+            lines[#lines + 1] = DL.L(SI_DUNGEONEERSLEDGER_TT_COMPLETE_DATED, GetAchievementName(achievementId), date)
+        else
+            lines[#lines + 1] = DL.L(complete and SI_DUNGEONEERSLEDGER_TT_COMPLETE or SI_DUNGEONEERSLEDGER_TT_INCOMPLETE, GetAchievementName(achievementId))
+        end
     end
     for _, tierEntry in ipairs(tiers or {}) do
         local name, _, _, _, tierComplete = GetAchievementInfo(tierEntry.id)
-        lines[#lines + 1] = DL.L(SI_DUNGEONEERSLEDGER_TT_TIER, name,
-            tierComplete and DL.CompletedWord() or DL.L(SI_DUNGEONEERSLEDGER_GROUP_INCOMPLETE))
+        local state = DL.L(SI_DUNGEONEERSLEDGER_GROUP_INCOMPLETE)
+        if tierComplete then
+            local date = showDates and DL.GetCompletionDate(tierEntry.id) or nil
+            state = date and DL.L(SI_DUNGEONEERSLEDGER_TT_STATE_DATED, DL.CompletedWord(), date) or DL.CompletedWord()
+        end
+        lines[#lines + 1] = DL.L(SI_DUNGEONEERSLEDGER_TT_TIER, name, state)
     end
     return table.concat(lines, "\n")
 end
