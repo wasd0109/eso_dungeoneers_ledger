@@ -23,10 +23,12 @@ Open them from Settings > Add-Ons > Dungeoneer's Ledger or with `/dledger settin
 
 - **Show completion icon** (on): the check box next to each dungeon name; its tooltip names the achievement.
 - **Show completion dates in tooltips** (on): adds the date an achievement was earned to the tooltips of the completion icon and the extra achievement markers, formatted by the game for your language.
+- **Show set collection progress in tooltips** (on): adds "Set pieces collected: X / Y" for the dungeon to the completion icon tooltip, from the game's item set collections (through LibSets).
 - **Show extra achievement markers** (on): small markers for a veteran dungeon's extra achievements, using the achievement's own icon. Grey until earned. The tooltip lists each tier.
   - **Hard mode marker**, **Speed run marker**, **No death marker**, **Trifecta marker** (all on): show or hide each tier separately. Only available while the main markers toggle is on. A dungeon without a tier shows no marker for it.
 - **Show dungeons I have a quest for** (on): marks dungeons that match an active quest of the current character (the tooltip names the quest, or "Current Undaunted pledge").
 - **Show which characters have quests for a dungeon** (on): adds "Also active on: ..." to that tooltip for your other characters.
+- **Remember completed pledges (done today)** (on): records the Undaunted pledges your characters turn in and shows "Pledge completed today (character)" on the dungeon's quest marker until the next daily reset (19:00 JST / 10:00 UTC). Records older than 8 days are dropped.
 - **Pin dungeons with a quest to the top** (off): puts those dungeons in their own group, "Dungeons with a quest", at the top of the NORMAL and VETERAN lists. Works together with grouping.
 - **Select and queue veteran dungeons instead of normal** (off): the two buttons pick the veteran version of each dungeon whichever difficulty the finder shows. Off: they follow your current dungeon difficulty.
 - **Skip completed when selecting quest dungeons** (off): the buttons leave out dungeons whose achievement is already completed.
@@ -55,7 +57,7 @@ Safeguards: one click is one action; nothing is ever selected or queued automati
 
 - Achievements are account-wide, so completion is the same on every character.
 - "Also active on" only knows characters you have logged into with this addon installed.
-- Today's Undaunted pledges cannot be seen by any addon before you accept them from Maj, Glirion or Urgarlag; the game does not expose them.
+- Today's Undaunted pledges cannot be seen by any addon before you accept them from Maj, Glirion or Urgarlag; the game does not expose them. The addon can only remember pledges your characters completed (daily reset at 19:00 JST / 10:00 UTC).
 - Extra achievement markers and the exact dungeon mapping depend on LibSets data; dungeons newer than your LibSets version fall back to name matching or show no icon.
 - Keyboard and mouse UI only.
 

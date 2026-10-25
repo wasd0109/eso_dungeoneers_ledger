@@ -57,8 +57,9 @@ end
 -- Tooltips    --
 -----------------
 
--- Lines for the completion icon and the tier markers: the dungeon achievement, then each extra tier.
-local function BuildCompletionTooltip(achievementId, complete, tiers)
+-- Lines for the completion icon and the tier markers: the dungeon achievement, each extra tier, then the
+-- set collection progress of the dungeon.
+local function BuildCompletionTooltip(location, achievementId, complete, tiers)
     local lines = {}
     local showDates = DL.settings.showDates
     if achievementId then
@@ -78,16 +79,30 @@ local function BuildCompletionTooltip(achievementId, complete, tiers)
         end
         lines[#lines + 1] = DL.L(SI_DUNGEONEERSLEDGER_TT_TIER, name, state)
     end
+    if DL.settings.showSetProgress then
+        local unlocked, total = DL.GetSetCollectionProgress(location.zoneId)
+        if unlocked then
+            lines[#lines + 1] = DL.L(SI_DUNGEONEERSLEDGER_TT_SET_PROGRESS, unlocked, total)
+        end
+    end
     return table.concat(lines, "\n")
 end
 
-local function BuildQuestTooltip(location, quest)
-    local lines = { quest.isPledge and DL.L(SI_DUNGEONEERSLEDGER_TT_PLEDGE) or DL.L(SI_DUNGEONEERSLEDGER_TT_QUEST, quest.name) }
-    if DL.settings.showAltQuests then
-        local names = DL.GetOtherCharactersWithQuest(location)
-        if names then
-            lines[#lines + 1] = DL.L(SI_DUNGEONEERSLEDGER_TT_ALSO_ACTIVE, table.concat(names, ", "))
+-- Lines for the quest marker: the active quest (if any), the other characters with one, and the
+-- characters that completed a pledge for the dungeon since the daily reset.
+local function BuildQuestTooltip(location, quest, pledgeDoneNames)
+    local lines = {}
+    if quest then
+        lines[#lines + 1] = quest.isPledge and DL.L(SI_DUNGEONEERSLEDGER_TT_PLEDGE) or DL.L(SI_DUNGEONEERSLEDGER_TT_QUEST, quest.name)
+        if DL.settings.showAltQuests then
+            local names = DL.GetOtherCharactersWithQuest(location)
+            if names then
+                lines[#lines + 1] = DL.L(SI_DUNGEONEERSLEDGER_TT_ALSO_ACTIVE, table.concat(names, ", "))
+            end
         end
+    end
+    if pledgeDoneNames then
+        lines[#lines + 1] = DL.L(SI_DUNGEONEERSLEDGER_TT_PLEDGE_DONE, table.concat(pledgeDoneNames, ", "))
     end
     return table.concat(lines, "\n")
 end
@@ -151,12 +166,15 @@ local function UpdateTierPips(row, state, layout, tiers, tooltip)
 end
 
 local function UpdateQuestMarker(state, layout, location)
-    local quest = DL.settings.showQuest and DL.FindRelatedQuest(location) or nil
-    if quest then
+    local show = DL.settings.showQuest
+    local quest = show and DL.FindRelatedQuest(location) or nil
+    local doneNames = show and DL.settings.rememberPledges and DL.GetPledgesDoneToday(location) or nil
+    local visible = quest ~= nil or doneNames ~= nil
+    if visible then
         layout:Place(state.pledge)
     end
-    state.pledge.tooltipText = quest and BuildQuestTooltip(location, quest) or nil
-    state.pledge:SetHidden(quest == nil)
+    state.pledge.tooltipText = visible and BuildQuestTooltip(location, quest, doneNames) or nil
+    state.pledge:SetHidden(not visible)
 end
 
 function DL.UpdateRow(row, location)
@@ -174,7 +192,7 @@ function DL.UpdateRow(row, location)
     local achievementId = DL.settings.showCompletion and DL.FindAchievementId(location) or nil
     local tiers = DL.GetLocationTiers(location)
     local complete = achievementId and IsAchievementComplete(achievementId) or false
-    local tooltip = BuildCompletionTooltip(achievementId, complete, tiers)
+    local tooltip = BuildCompletionTooltip(location, achievementId, complete, tiers)
 
     UpdateStatusIcon(state, layout, achievementId, complete, tooltip)
     UpdateTierPips(row, state, layout, tiers, tooltip)

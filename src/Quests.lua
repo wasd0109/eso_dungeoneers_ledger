@@ -4,6 +4,7 @@ local DL = DungeoneersLedger
 -- quest = { name, isPledge, zones = list of zone ids, zoneSet = { [zoneId] = true } (active only),
 --           text = padded normalised title and objectives (pledge / dungeon quests only) }
 local activeQuests = nil
+local lastKnownPledges = {}
 
 local function AddQuestZone(quest, zoneId)
     if zoneId and zoneId > 0 and not quest.zoneSet[zoneId] then
@@ -53,8 +54,22 @@ function DL.GetActiveQuests()
             quests[#quests + 1] = ReadJournalQuest(questIndex)
         end
         activeQuests = quests
+        -- Remember the pledges: when one is turned in the journal no longer has it, but the completion
+        -- record (PledgeLog.lua) still needs its title, objectives and zones.
+        local pledges = {}
+        for _, quest in ipairs(quests) do
+            if quest.isPledge then
+                pledges[#pledges + 1] = quest
+            end
+        end
+        lastKnownPledges = pledges
     end
     return activeQuests
+end
+
+-- The pledge quests seen at the last journal read.
+function DL.GetLastKnownPledges()
+    return lastKnownPledges
 end
 
 -- A quest is related to a dungeon when one of its zones is the dungeon's zone, or, for pledge and dungeon
@@ -84,6 +99,22 @@ function DL.FindRelatedQuest(location)
         end
     end
     return found
+end
+
+-- Zone ids of the finder dungeons the quest is related to (the same matching as FindRelatedQuest).
+function DL.FindQuestDungeonZones(quest)
+    local zones, seen = {}, {}
+    for _, activityType in ipairs(DL.ACTIVITY_TYPES) do
+        for _, location in ipairs(DL.GetLocations(activityType)) do
+            local zoneId = location.zoneId
+            if zoneId and not seen[zoneId] and DL.IsSpecificLocation(location)
+                and QuestMatches(quest, zoneId, DL.GetNormalizedName(location)) then
+                seen[zoneId] = true
+                zones[#zones + 1] = zoneId
+            end
+        end
+    end
+    return zones
 end
 
 -----------------------------

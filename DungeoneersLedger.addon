@@ -6,8 +6,8 @@
 ## Title: Dungeoneer's Ledger
 ## Description: Shows in the Dungeon Finder which dungeons you have completed, their extra achievements and your dungeon quests, with grouping, sorting, search and one-click selection of quest dungeons.
 ## Author: wasd0109
-## Version: 0.1.0
-## AddOnVersion: 1
+## Version: 0.2.0
+## AddOnVersion: 2
 ## APIVersion: 101051 101052
 ## DependsOn: LibSets>=9040 LibAddonMenu-2.0>=43
 ## SavedVariables: DungeoneersLedger_SavedVariables DungeonCompletion_SavedVariables
@@ -20,6 +20,7 @@ src/Core.lua
 src/LibSetsData.lua
 src/Achievements.lua
 src/Quests.lua
+src/PledgeLog.lua
 src/ListLogic.lua
 src/RowUI.lua
 src/FinderPanel.lua

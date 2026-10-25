@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.0
+
+- Set collection progress ("Set pieces collected: X / Y") in the completion icon tooltip, via LibSets; cached
+  and refreshed when the game reports collection changes. New setting, on by default.
+- "Pledge done today": turned-in Undaunted pledges are remembered per character and shown on the dungeon's
+  quest marker until the next daily reset (19:00 JST / 10:00 UTC, one constant in Core.lua). Entries older than
+  8 days are dropped. New setting, on by default. Today's pledges themselves are still not visible to addons.
+- Tests for both features.
+
 ## 0.1.0
 
 First release (successor of the unreleased DungeonCompletion addon).

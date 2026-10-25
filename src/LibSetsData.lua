@@ -101,3 +101,42 @@ function DL.IsDungeonZone(zoneId)
     local index = DL.GetLibSetsIndex()
     return index ~= nil and index.zones[zoneId] == true
 end
+
+----------------------------
+-- Set collection progress --
+----------------------------
+
+local setProgressCache = {} -- [zoneId] = { unlocked, total } or false (zone has no collection data)
+
+-- Forgets the cached progress; called when the game reports a change in the item set collections.
+function DL.InvalidateSetProgress()
+    setProgressCache = {}
+end
+
+-- Unlocked and total set collection pieces of a dungeon zone, through LibSets (which maps zones to the
+-- game's collection categories), or nil when LibSets is not ready or the zone has no sets. Cached per
+-- zone, so a list rebuild costs one lookup per dungeon at most.
+function DL.GetSetCollectionProgress(zoneId)
+    if not zoneId then
+        return nil
+    end
+    local cached = setProgressCache[zoneId]
+    if cached ~= nil then
+        if cached then
+            return cached[1], cached[2]
+        end
+        return nil
+    end
+    local lib = LibSets
+    if not lib or lib.fullyLoaded ~= true or not lib.GetNumItemSetCollectionZoneUnlockedPieces then
+        return nil -- not cached: LibSets may become ready later
+    end
+    local ok, unlocked, total = DL.SafeCall("LibSets.GetNumItemSetCollectionZoneUnlockedPieces",
+        lib.GetNumItemSetCollectionZoneUnlockedPieces, zoneId)
+    if ok and type(unlocked) == "number" and type(total) == "number" and total > 0 then
+        setProgressCache[zoneId] = { unlocked, total }
+        return unlocked, total
+    end
+    setProgressCache[zoneId] = false
+    return nil
+end

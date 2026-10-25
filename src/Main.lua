@@ -54,15 +54,44 @@ local function OnQuestEvent()
     OnQuestChanged()
 end
 
+-- A turned-in pledge is recorded before the journal is re-read; the quest-complete and quest-removed events
+-- both report it, and the log ignores the duplicate.
+local function RecordPledge(questName)
+    if DL.settings.rememberPledges then
+        DL.SafeCall("pledge", DL.RecordPledgeCompletion, questName)
+    end
+end
+
+local function OnQuestComplete(_, questName)
+    RecordPledge(questName)
+    OnQuestEvent()
+end
+
+local function OnQuestRemoved(_, isCompleted, _, questName)
+    if isCompleted then
+        RecordPledge(questName)
+    end
+    OnQuestEvent()
+end
+
+local function OnSetCollectionChanged()
+    DL.InvalidateSetProgress()
+    if DL.IsFinderShowing() then
+        DL.Debounce("setProgress", DL.RefreshVisibleRows)
+    end
+end
+
 local function RegisterEvents()
     local events = DL.name
     EVENT_MANAGER:RegisterForEvent(events, EVENT_ACHIEVEMENT_UPDATED, OnAchievementChanged)
     EVENT_MANAGER:RegisterForEvent(events, EVENT_ACHIEVEMENTS_UPDATED, OnAchievementChanged)
     EVENT_MANAGER:RegisterForEvent(events, EVENT_QUEST_ADDED, OnQuestEvent)
-    EVENT_MANAGER:RegisterForEvent(events, EVENT_QUEST_REMOVED, OnQuestEvent)
-    EVENT_MANAGER:RegisterForEvent(events, EVENT_QUEST_COMPLETE, OnQuestEvent)
+    EVENT_MANAGER:RegisterForEvent(events, EVENT_QUEST_REMOVED, OnQuestRemoved)
+    EVENT_MANAGER:RegisterForEvent(events, EVENT_QUEST_COMPLETE, OnQuestComplete)
     EVENT_MANAGER:RegisterForEvent(events, EVENT_QUEST_ADVANCED, OnQuestEvent)
     EVENT_MANAGER:RegisterForEvent(events, EVENT_PLAYER_ACTIVATED, OnQuestChanged)
+    EVENT_MANAGER:RegisterForEvent(events, EVENT_ITEM_SET_COLLECTIONS_UPDATED, OnSetCollectionChanged)
+    EVENT_MANAGER:RegisterForEvent(events, EVENT_ITEM_SET_COLLECTION_UPDATED, OnSetCollectionChanged)
 end
 
 -------------------

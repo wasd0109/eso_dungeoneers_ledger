@@ -3,7 +3,7 @@ DungeoneersLedger = DungeoneersLedger or {}
 local DL = DungeoneersLedger
 
 DL.name = "DungeoneersLedger"
-DL.version = "0.1.0" -- keep in step with the manifest
+DL.version = "0.2.0" -- keep in step with the manifest
 DL.savedVarsName = "DungeoneersLedger_SavedVariables"
 DL.oldAddonName = "DungeonCompletion"
 DL.oldSavedVarsName = "DungeonCompletion_SavedVariables"
@@ -21,6 +21,8 @@ DL.DEFAULTS =
     showCompletion = true,
     showTiers = true,
     showDates = true,
+    showSetProgress = true,
+    rememberPledges = true,
     tierHardMode = true,
     tierSpeedRun = true,
     tierNoDeath = true,
@@ -106,6 +108,20 @@ end
 
 function DL.CompletedWord()
     return GetString(SI_SCREEN_NARRATION_ACHIEVEMENT_EARNED_ICON_NARRATION)
+end
+
+-- The daily quest reset, in seconds after midnight UTC. The game exposes no API for it (only the daily
+-- login reward timers, which are a different clock), so it is a constant: 19:00 JST = 10:00 UTC (confirmed
+-- by the user); change it here if it ever moves.
+DL.DAILY_RESET_UTC_SECONDS = 10 * 60 * 60
+local SECONDS_PER_DAY = 24 * 60 * 60
+
+-- The timestamp (seconds, UTC) of the most recent daily reset at or before `now`. Pure: pass `now` to
+-- test it; without it the game's clock is used.
+function DL.GetLastDailyReset(now)
+    now = now or GetTimeStamp()
+    local offset = DL.DAILY_RESET_UTC_SECONDS
+    return math.floor((now - offset) / SECONDS_PER_DAY) * SECONDS_PER_DAY + offset
 end
 
 function DL.IsFinderShowing()

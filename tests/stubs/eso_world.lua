@@ -195,6 +195,7 @@ function World:installApi()
         TEXT_ALIGN_RIGHT = 2, ACTIVITY_FINDER_STATUS_NONE = 0, ACTIVITY_FINDER_STATUS_QUEUED = 1, ACTIVITY_FINDER_STATUS_READY_CHECK = 2,
         EVENT_ADD_ON_LOADED = 1, EVENT_ACHIEVEMENT_UPDATED = 2, EVENT_ACHIEVEMENTS_UPDATED = 3, EVENT_QUEST_ADDED = 4,
         EVENT_QUEST_REMOVED = 5, EVENT_QUEST_COMPLETE = 6, EVENT_QUEST_ADVANCED = 7, EVENT_PLAYER_ACTIVATED = 8,
+        EVENT_ITEM_SET_COLLECTIONS_UPDATED = 9, EVENT_ITEM_SET_COLLECTION_UPDATED = 10,
     }
     for k, v in pairs(consts) do S[k] = v end
     S.ZO_ACTIVITY_FINDER_LOCATION_ENTRY_TYPE = { SPECIFIC = 1, SET = 2 }
@@ -271,6 +272,7 @@ function World:installApi()
     S.GetDisplayName = function() return world.displayName or "@Tester" end
     S.GetUnitName = function() return "Tester^M" end
     S.GetCurrentCharacterId = function() return world.currentCharacterId or "100" end
+    S.GetTimeStamp = function() return world.now or 1700000000 end
     S.GetNumCharacters = function() return #world.characters end
     S.GetCharacterInfo = function(i)
         local c = world.characters[i]
